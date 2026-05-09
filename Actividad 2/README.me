@@ -1,0 +1,42 @@
+## Actividad 2
+
+## 1. Diseño e Implementación del Hardware
+El diseño ha sido implementado utilizando la plataforma de simulación Wokwi. Se ha configurado un microcontrolador Arduino Uno conectado a una red de sensores y actuadores bajo el siguiente esquema de conexionado:
+
+| Componente | Pin Arduino | Función Técnica |
+| :--- | :--- | :--- |
+| DHT22 | 2 | Supervisión de Temperatura y Humedad |
+| Receptor IR (DAT) | 3 | Gestión de llamadas remotas (Protocolo NEC) |
+| NeoPixel Strip | 5 | Iluminación artificial (8 niveles de intensidad) |
+| Servomotor SG90 | 6 | Simulación de tracción y posicionamiento de cabina |
+| HC-SR04 | 9 (Trig) / 10 (Echo) | Detección de objetos/presencia |
+| Sensor LDR | A0 | Medición de iluminancia ambiental |
+| LCD I2C (16x2) | A4 (SDA) / A5 (SCL) | Interfaz HMI (Human-Machine Interface) |
+
+## 2. Programación y Algoritmos de Control
+La lógica de control se basa en los siguientes aspectos:
+
+### A. Control de Posicionamiento
+Se ha programado una matriz de comandos que traduce las señales del mando infrarrojo en ángulos de giro para el servomotor. Cada planta (0 a 5) corresponde a una posición física, permitiendo una simulación realista del transporte vertical.
+
+### B. Algoritmo de Climatización (Zona Muerta)
+Este algoritmo se basa en un Control ON-OFF con zona muerta:
+* Rango de Confort (22°C - 28°C): El sistema permanece en reposo ("NORMAL").
+* Calor Crítico (> 28°C): Activación de sistema de refrigeración ("FRIO ON").
+* Frío Crítico (< 22°C): Activación de calefacción ("CALOR ON").
+
+### C. Iluminación Adaptativa
+Mediante el uso de la tira NeoPixel, se han definido 8 escalones de iluminación. El sistema monitoriza el sensor LDR y compensa la falta de luz natural encendiendo progresivamente los LEDs de la tira, asegurando que la cabina siempre mantenga un nivel de lux óptimo.
+
+## 3. Pruebas de Funcionamiento y Resultados
+El sistema fue sometido a diversas pruebas de estrés para validar su comportamiento:
+
+1. Prueba de Llamada: Se verificó que al pulsar los botones del mando IR, el servomotor se desplaza de forma precisa y el LCD actualiza la planta actual instantáneamente.
+2. Validación Ambiental: Se forzaron cambios térmicos en el sensor DHT22, confirmando que el mensaje de estado cambia solo al cruzar los límites de la zona muerta.
+3. Respuesta Lumínica: Se comprobó que el escalonamiento de la tira LED es fluido y responde en tiempo real a las variaciones de luz sobre el sensor LDR.
+
+## 4. Instrucciones de Ejecución
+1. Acceso al proyecto en Wokwi:(https://wokwi.com/projects/463193542027560961)
+2. Inicie la simulación (botón Play).
+3. Interactúe con el Mando IR para cambiar de planta.
+4. Ajuste los deslizadores de los sensores DHT22 y LDR para observar la respuesta de los sistemas de control.
