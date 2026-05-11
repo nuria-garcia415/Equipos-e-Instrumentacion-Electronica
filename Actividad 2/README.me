@@ -25,8 +25,11 @@ Este algoritmo se basa en un Control ON-OFF con zona muerta:
 * Calor Crítico (> 28°C): Activación de sistema de refrigeración ("FRIO ON").
 * Frío Crítico (< 22°C): Activación de calefacción ("CALOR ON").
 
-### C. Iluminación Adaptativa
-Mediante el uso de la tira NeoPixel, se han definido 8 escalones de iluminación. El sistema monitoriza el sensor LDR y compensa la falta de luz natural encendiendo progresivamente los LEDs de la tira, asegurando que la cabina siempre mantenga un nivel de lux óptimo.
+### C. Iluminación Adaptativa y Presencia
+Mediante el uso de la tira NeoPixel, se han definido 8 escalones de iluminación gestionados bajo criterios de eficiencia energética:
+
+* Detección de Presencia: El sistema utiliza el sensor HC-SR04 para habilitar la iluminación solo si se detecta un usuario a menos de 200 cm.
+* Control Lumínico: Una vez detectada presencia, el sistema monitoriza el sensor LDR y compensa la falta de luz natural encendiendo progresivamente los LEDs. Si no hay usuarios presentes, la tira permanece apagada independientemente de la luz ambiental.
 
 ## 3. Pruebas de Funcionamiento y Resultados
 El sistema fue sometido a diversas pruebas de estrés para validar su comportamiento:
